@@ -4,7 +4,20 @@ import os
 from functools import wraps
 from datetime import datetime
 import mysql.connector
+from dotenv import load_dotenv
 
+load_dotenv()
+db_host = os.getenv("db_host")
+db_user = os.getenv("db_user")
+db_password = os.getenv("db_password")
+db_name = os.getenv("db_name")
+
+db = mysql.connector.connect(
+    host=db_host,
+    user=db_user,
+    password=db_password,
+    database=db_name
+)
 
 # ==========================================
 # FLASK APP
@@ -12,7 +25,7 @@ import mysql.connector
 
 app = Flask(__name__)
 
-app.secret_key = "stgabriel_secret_key"
+app.secret_key = os.getenv("secret_key")
 
 app.config["UPLOAD_FOLDER"] = "uploads"
 
@@ -35,18 +48,6 @@ def admin_required(f):
         return f(*args, **kwargs)
 
     return decorated_function
-
-
-# ==========================================
-# CONNECT FLASK TO MYSQL
-# ==========================================
-
-db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="Timtech@25",
-    database="school_management"
-)
 
 
 # ==========================================
@@ -1982,5 +1983,4 @@ def logout():
 # ==========================================
 
 if __name__ == "__main__":
-
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
