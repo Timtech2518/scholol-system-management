@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admission Application | St. Gabriel Secondary School</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: #0b3d91;
+            color: white;
+            padding: 22px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 6px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        /* CONTAINER */
+
+        .container {
+            max-width: 1000px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .intro {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.07);
+        }
+
+        .intro h2 {
+            color: #0b3d91;
+            margin-bottom: 10px;
+        }
+
+        .intro p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* FORM */
+
+        form {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.07);
+        }
+
+        /* SECTION */
+
+        .form-section {
+            margin-bottom: 35px;
+        }
+
+        .section-title {
+            background: #0b3d91;
+            color: white;
+            padding: 13px 16px;
+            border-radius: 7px;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        /* GRID */
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            font-weight: bold;
+            margin-bottom: 7px;
+            color: #333;
+            font-size: 14px;
+        }
+
+        label span {
+            color: #d00000;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d5dce5;
+            border-radius: 7px;
+            font-size: 14px;
+            outline: none;
+            transition: .2s;
+            background: #fff;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: #0b3d91;
+            box-shadow: 0 0 0 2px rgba(11,61,145,.08);
+        }
+
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* FILE UPLOAD */
+
+        .file-box {
+            border: 2px dashed #cbd5e1;
+            padding: 18px;
+            border-radius: 8px;
+            background: #fafcff;
+        }
+
+        .file-box input {
+            border: none;
+            padding: 5px 0;
+        }
+
+        .file-note {
+            color: #777;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+
+        /* REQUIRED */
+
+        .required-note {
+            color: #777;
+            font-size: 13px;
+            margin-bottom: 20px;
+        }
+
+        /* BUTTON */
+
+        .submit-area {
+            text-align: center;
+            border-top: 1px solid #eee;
+            padding-top: 25px;
+        }
+
+        .submit-btn {
+            background: #0b3d91;
+            color: white;
+            border: none;
+            padding: 14px 35px;
+            border-radius: 7px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        .submit-btn:hover {
+            background: #082f70;
+            transform: translateY(-1px);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 15px;
+            color: #0b3d91;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            color: #777;
+            font-size: 13px;
+            padding: 25px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 22px;
+            }
+
+            .container {
+                margin-top: 20px;
+            }
+
+            form {
+                padding: 20px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full-width {
+                grid-column: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <h1>St. Gabriel Secondary School</h1>
+
+        <p>Admission Application Portal</p>
+
+    </header>
+
+
+    <div class="container">
+
+        <!-- INTRODUCTION -->
+
+        <div class="intro">
+
+            <h2>Admission Application Form</h2>
+
+            <p>
+                Welcome to St. Gabriel Secondary School.
+                Please complete the application form carefully and provide
+                accurate information. Fields marked with
+                <strong style="color:#d00000;">*</strong>
+                are required.
+            </p>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <form action="/admission" method="POST" enctype="multipart/form-data">
+
+            <p class="required-note">
+                Please make sure all information provided is correct before submitting.
+            </p>
+
+
+            <!-- APPLICANT INFORMATION -->
+
+            <div class="form-section">
+
+                <h2 class="section-title">
+                    1. Applicant Information
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Full Name <span>*</span>
+                        </label>
+
+                        <input
+                            type="text"
+                            name="full_name"
+                            placeholder="Enter student's full name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Date of Birth <span>*</span>
+                        </label>
+
+                        <input
+                            type="date"
+                            name="date_of_birth"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Gender <span>*</span>
+                        </label>
+
+                        <select name="gender" required>
+
+                            <option value="">Select Gender</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Nationality
+                        </label>
+
+                        <input
+                            type="text"
+                            name="nationality"
+                            placeholder="e.g. Nigerian"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            State of Origin
+                        </label>
+
+                        <input
+                            type="text"
+                            name="state_of_origin"
+                            placeholder="Enter state of origin"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Local Government Area
+                        </label>
+
+                        <input
+                            type="text"
+                            name="lga"
+                            placeholder="Enter LGA"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Home Address
+                        </label>
+
+                        <textarea
+                            name="home_address"
+                            placeholder="Enter student's home address"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+          <!-- PARENT INFORMATION -->
+
+<div class="form-section">
+
+    <h2 class="section-title">
+        2. Parent / Guardian Information
+    </h2>
+
+    <div class="form-grid">
+
+        <div class="form-group">
+
+            <label>
+                Parent / Guardian Name <span>*</span>
+            </label>
+
+            <input
+                type="text"
+                name="guardian_name"
+                placeholder="Enter parent or guardian name"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Relationship <span>*</span>
+            </label>
+
+            <select name="relationship" required>
+
+                <option value="">Select Relationship</option>
+                <option value="Father">Father</option>
+                <option value="Mother">Mother</option>
+                <option value="Guardian">Guardian</option>
+                <option value="Other">Other</option>
+
+            </select>
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Phone Number <span>*</span>
+            </label>
+
+            <input
+                type="tel"
+                name="guardian_phone"
+                placeholder="e.g. 08012345678"
+                required
+            >
+
+        </div>
+
+
+        <div class="form-group">
+
+            <label>
+                Email Address
+            </label>
+
+            <input
+                type="email"
+                name="guardian_email"
+                placeholder="parent@example.com"
+            >
+
+        </div>
+
+
+        <div class="form-group full-width">
+
+            <label>
+                Parent / Guardian Address
+            </label>
+
+            <textarea
+                name="guardian_address"
+                placeholder="Enter parent or guardian address"
+            ></textarea>
+
+        </div>
+
+    </div>
+
+</div>
+
+            <!-- ACADEMIC INFORMATION -->
+
+            <div class="form-section">
+
+                <h2 class="section-title">
+                    3. Academic Information
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Previous School
+                        </label>
+
+                        <input
+                            type="text"
+                            name="previous_school"
+                            placeholder="Enter previous school"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Last Class Attended
+                        </label>
+
+                        <input
+                            type="text"
+                            name="last_class"
+                            placeholder="e.g. Primary 6"
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Intended Class <span>*</span>
+                        </label>
+
+                        <select name="intended_class" required>
+
+                            <option value="">Select Class</option>
+
+                            <option value="JSS1">JSS1</option>
+                            <option value="JSS2">JSS2</option>
+                            <option value="JSS3">JSS3</option>
+
+                            <option value="SS1">SS1</option>
+                            <option value="SS2">SS2</option>
+                            <option value="SS3">SS3</option>
+
+                        </select>
+
+                    </div>
+
+
+                    <div class="form-group full-width">
+
+                        <label>
+                            Previous Examination / Result
+                        </label>
+
+                        <textarea
+                            name="previous_result"
+                            placeholder="Enter previous examination details or result"
+                        ></textarea>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- DOCUMENTS -->
+
+            <div class="form-section">
+
+                <h2 class="section-title">
+                    4. Required Documents
+                </h2>
+
+                <div class="form-grid">
+
+                    <div class="form-group">
+
+                        <label>
+                            Passport Photograph
+                        </label>
+
+                        <div class="file-box">
+
+                            <input
+                                type="file"
+                                name="passport_photo"
+                                accept="image/*"
+                            >
+
+                            <p class="file-note">
+                                JPG, PNG or JPEG
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Birth Certificate / Declaration of Age
+                        </label>
+
+                        <div class="file-box">
+
+                            <input
+                                type="file"
+                                name="birth_certificate"
+                                accept=".pdf,.jpg,.jpeg,.png"
+                            >
+
+                            <p class="file-note">
+                                PDF, JPG or PNG
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Previous Report / Result
+                        </label>
+
+                        <div class="file-box">
+
+                            <input
+                                type="file"
+                                name="previous_report"
+                                accept=".pdf,.jpg,.jpeg,.png"
+                            >
+
+                            <p class="file-note">
+                                PDF, JPG or PNG
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+                            Transfer Certificate
+                        </label>
+
+                        <div class="file-box">
+
+                            <input
+                                type="file"
+                                name="transfer_certificate"
+                                accept=".pdf,.jpg,.jpeg,.png"
+                            >
+
+                            <p class="file-note">
+                                Required for transfer students where applicable
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- SUBMIT -->
+
+            <div class="submit-area">
+
+                <button type="submit" class="submit-btn">
+                    Submit Application
+                </button>
+
+                <br>
+
+                <a href="/" class="back-btn">
+                    ← Back to Home
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+
+    <footer>
+        © 2026 St. Gabriel Secondary School. All Rights Reserved.
+    </footer>
+
+</body>
+</html>

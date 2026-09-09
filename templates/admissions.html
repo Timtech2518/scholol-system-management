@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admissions | St. Gabriel Secondary School</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+        .header {
+            background: #0b4f9c;
+            color: white;
+            padding: 22px 30px;
+        }
+
+        .header h1 {
+            font-size: 25px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            opacity: .85;
+            font-size: 14px;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+
+        .top h2 {
+            font-size: 22px;
+        }
+
+        .back-btn {
+            background: #0b4f9c;
+            color: white;
+            text-decoration: none;
+            padding: 11px 18px;
+            border-radius: 7px;
+            font-size: 14px;
+        }
+
+        .table-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.05);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 800px;
+        }
+
+        th {
+            background: #f1f5f9;
+            text-align: left;
+            padding: 14px;
+            font-size: 13px;
+            color: #475569;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #e5e7eb;
+            font-size: 13px;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+        .status {
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .pending {
+            background: #fff7ed;
+            color: #c2410c;
+        }
+
+        .approved {
+            background: #dcfce7;
+            color: #15803d;
+        }
+
+        .rejected {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .view-btn {
+            background: #e8f1ff;
+            color: #0b4f9c;
+            text-decoration: none;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 12px;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+        }
+
+        @media (max-width: 600px) {
+
+            .container {
+                padding: 15px;
+            }
+
+            .top {
+                align-items: flex-start;
+                gap: 15px;
+                flex-direction: column;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="header">
+
+        <h1>St. Gabriel Secondary School</h1>
+
+        <p>Admission Management</p>
+
+    </div>
+
+
+    <div class="container">
+
+        <div class="top">
+
+            <h2>Admission Applications</h2>
+
+            <a href="{{ url_for('admin_dashboard') }}" class="back-btn">
+                ← Dashboard
+            </a>
+
+        </div>
+
+
+        <div class="table-card">
+
+            {% if admissions %}
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Applicant Name</th>
+
+                        <th>Intended Class</th>
+
+                        <th>Application Date</th>
+
+                        <th>Admission Number</th>
+
+                        <th>Status</th>
+
+                        <th>Action</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for application in admissions %}
+
+                    <tr>
+
+                        <td>
+                            #{{ application.id }}
+                        </td>
+
+                        <td>
+                            <strong>{{ application.full_name }}</strong>
+                        </td>
+
+                        <td>
+                            {{ application.intended_class }}
+                        </td>
+
+                        <td>
+                            {{ application.application_date }}
+                        </td>
+
+                        <td>
+
+                            {% if application.admission_number %}
+
+                                {{ application.admission_number }}
+
+                            {% else %}
+
+                                —
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            {% if application.status == "Approved" %}
+
+                                <span class="status approved">
+                                    Approved
+                                </span>
+
+                            {% elif application.status == "Rejected" %}
+
+                                <span class="status rejected">
+                                    Rejected
+                                </span>
+
+                            {% else %}
+
+                                <span class="status pending">
+                                    Pending
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                        <td>
+
+                            <a
+                                href="{{ url_for('view_application', application_id=application.id) }}"
+                                class="view-btn"
+                            >
+                                View
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            {% else %}
+
+                <div class="empty">
+
+                    <h3>No Applications Yet</h3>
+
+                    <p>Admission applications will appear here.</p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

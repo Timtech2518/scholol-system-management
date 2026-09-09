@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Details | St. Gabriel Secondary School</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        .header {
+            background: #0b3d91;
+            color: white;
+            padding: 20px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h2 {
+            font-size: 21px;
+        }
+
+        .back {
+            background: white;
+            color: #0b3d91;
+            padding: 10px 17px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .page-title {
+            margin-bottom: 25px;
+        }
+
+        .page-title h1 {
+            color: #0b3d91;
+            margin-bottom: 6px;
+        }
+
+        .page-title p {
+            color: #777;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.07);
+            margin-bottom: 25px;
+        }
+
+        .card h2 {
+            color: #0b3d91;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 12px;
+        }
+
+        .details {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .detail {
+            background: #f5f8fc;
+            padding: 16px;
+            border-radius: 8px;
+        }
+
+        .detail small {
+            display: block;
+            color: #777;
+            margin-bottom: 7px;
+        }
+
+        .detail strong {
+            color: #222;
+        }
+
+        .status {
+            display: inline-block;
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+        }
+
+        .actions {
+            margin-top: 25px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 11px 18px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .btn-primary {
+            background: #0b3d91;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #e9eef7;
+            color: #0b3d91;
+        }
+
+        @media (max-width: 650px) {
+
+            .header {
+                padding: 18px 20px;
+            }
+
+            .header h2 {
+                font-size: 17px;
+            }
+
+            .details {
+                grid-template-columns: 1fr;
+            }
+
+            .card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="header">
+
+        <h2>St. Gabriel Secondary School</h2>
+
+        <a href="{{ url_for('students') }}" class="back">
+            ← Students
+        </a>
+
+    </header>
+
+
+    <main class="container">
+
+        <div class="page-title">
+
+            <h1>Student Details</h1>
+
+            <p>
+                View complete student information
+            </p>
+
+        </div>
+
+
+        <!-- STUDENT INFORMATION -->
+
+        <div class="card">
+
+            <h2>👤 Student Information</h2>
+
+            <div class="details">
+
+                <div class="detail">
+                    <small>Full Name</small>
+                    <strong>{{ student.full_name }}</strong>
+                </div>
+
+                <div class="detail">
+                    <small>Admission Number</small>
+                    <strong>{{ student.admission_number }}</strong>
+                </div>
+
+                <div class="detail">
+                    <small>Date of Birth</small>
+                    <strong>{{ student.date_of_birth }}</strong>
+                </div>
+
+                <div class="detail">
+                    <small>Gender</small>
+                    <strong>{{ student.gender }}</strong>
+                </div>
+
+                <div class="detail">
+                    <small>Nationality</small>
+                    <strong>{{ student.nationality }}</strong>
+                </div>
+
+                <div class="detail">
+                    <small>State of Origin</small>
+                    <strong>{{ student.state_of_origin }}</strong>
+                </div>
+
+                <div class="detail">
+                    <small>LGA</small>
+                    <strong>{{ student.lga }}</strong>
+                </div>
+
+                <div class="detail">
+                    <small>Class</small>
+                    <strong>{{ student.class_name }}</strong>
+                </div>
+
+                <div class="detail">
+                    <small>Admission Date</small>
+                    <strong>{{ student.admission_date }}</strong>
+                </div>
+
+                <div class="detail">
+                    <small>Status</small>
+                    <span class="status">
+                        {{ student.status }}
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- PARENT INFORMATION -->
+
+        <div class="card">
+
+            <h2>👨‍👩‍👧 Parent / Guardian</h2>
+
+            <div class="details">
+
+                <div class="detail">
+                    <small>Name</small>
+                    <strong>{{ student.parent_name }}</strong>
+                </div>
+
+                <div class="detail">
+                    <small>Phone</small>
+                    <strong>{{ student.parent_phone }}</strong>
+                </div>
+
+                <div class="detail">
+                    <small>Email</small>
+                    <strong>{{ student.parent_email }}</strong>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ACTIONS -->
+
+        <div class="card">
+
+            <h2>Quick Actions</h2>
+
+            <div class="actions">
+
+                <a href="{{ url_for('student_results_page') }}"
+                   class="btn btn-primary">
+                    📊 View Results
+                </a>
+
+                <a href="{{ url_for('fees') }}"
+                   class="btn btn-secondary">
+                    💰 School Fees
+                </a>
+
+                <a href="{{ url_for('students') }}"
+                   class="btn btn-secondary">
+                    ← Back to Students
+                </a>
+
+            </div>
+
+        </div>
+
+    </main>
+
+</body>
+</html>

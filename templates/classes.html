@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Class Management | St. Gabriel Secondary School</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: #0b3d91;
+            color: white;
+            padding: 22px 40px;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 25px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: .9;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,.5);
+            padding: 10px 16px;
+            border-radius: 7px;
+            font-size: 14px;
+            transition: .2s;
+        }
+
+        .back-btn:hover {
+            background: white;
+            color: #0b3d91;
+        }
+
+        /* CONTAINER */
+
+        .container {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        /* TOP */
+
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 15px;
+        }
+
+        .page-title h2 {
+            color: #0b3d91;
+            font-size: 23px;
+            margin-bottom: 5px;
+        }
+
+        .page-title p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        /* ADD BUTTON */
+
+        .add-btn {
+            background: #0b3d91;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: .2s;
+        }
+
+        .add-btn:hover {
+            background: #082f70;
+            transform: translateY(-1px);
+        }
+
+        /* STATS */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.07);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            background: #e8f0ff;
+            color: #0b3d91;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .stat-info h3 {
+            color: #0b3d91;
+            font-size: 24px;
+            margin-bottom: 3px;
+        }
+
+        .stat-info p {
+            color: #777;
+            font-size: 13px;
+        }
+
+        /* TABLE */
+
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.07);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-header h3 {
+            color: #0b3d91;
+            font-size: 17px;
+        }
+
+        .search-box input {
+            padding: 10px 13px;
+            border: 1px solid #d5dce5;
+            border-radius: 7px;
+            outline: none;
+            width: 220px;
+        }
+
+        .search-box input:focus {
+            border-color: #0b3d91;
+        }
+
+        /* TABLE */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f5f8fd;
+            color: #333;
+            font-size: 13px;
+            text-align: left;
+            padding: 14px 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+            color: #555;
+        }
+
+        tr:hover {
+            background: #fafcff;
+        }
+
+        .class-name {
+            color: #0b3d91;
+            font-weight: bold;
+        }
+
+        /* STATUS */
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .active {
+            background: #e7f7ed;
+            color: #16803c;
+        }
+
+        .inactive {
+            background: #fdecec;
+            color: #c62828;
+        }
+
+        /* EMPTY */
+
+        .empty {
+            text-align: center;
+            padding: 55px 20px;
+            color: #777;
+        }
+
+        .empty-icon {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+
+        .empty h3 {
+            color: #444;
+            margin-bottom: 5px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            color: #777;
+            font-size: 13px;
+            padding: 25px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 800px) {
+
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .top-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 700px;
+            }
+
+            .table-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .search-box,
+            .search-box input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="header-content">
+
+            <div>
+                <h1>Class Management</h1>
+                <p>St. Gabriel Secondary School</p>
+            </div>
+
+            <a href="/admin" class="back-btn">
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <div class="container">
+
+        <!-- PAGE TITLE -->
+
+        <div class="top-section">
+
+            <div class="page-title">
+
+                <h2>School Classes</h2>
+
+                <p>
+                    Manage and view all classes in the school.
+                </p>
+
+            </div>
+
+         <a href="/admin/classes/add" class="add-btn">
+    + Add New Class
+</a>
+
+        </div>
+
+
+        <!-- STATISTICS -->
+
+        <div class="stats">
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    🏫
+                </div>
+
+                <div class="stat-info">
+
+                    <h3>{{ classes|length }}</h3>
+
+                    <p>Total Classes</p>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    📚
+                </div>
+
+                <div class="stat-info">
+
+                    <h3>
+                        {{ classes|selectattr("status", "equalto", "Active")|list|length }}
+                    </h3>
+
+                    <p>Active Classes</p>
+
+                </div>
+
+            </div>
+
+
+            <div class="stat-card">
+
+                <div class="stat-icon">
+                    👨‍🎓
+                </div>
+
+                <div class="stat-info">
+
+                    <h3>School</h3>
+
+                    <p>Class Management</p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CLASS TABLE -->
+
+        <div class="table-container">
+
+            <div class="table-header">
+
+                <h3>Class List</h3>
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search class..."
+                        onkeyup="searchClasses()"
+                    >
+
+                </div>
+
+            </div>
+
+
+            {% if classes %}
+
+            <table id="classTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+                        <th>Class Name</th>
+                        <th>Class Code</th>
+                        <th>Class Teacher</th>
+                        <th>Capacity</th>
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for class in classes %}
+
+                    <tr>
+
+                        <td>
+                            {{ loop.index }}
+                        </td>
+
+                        <td class="class-name">
+                            {{ class.class_name }}
+                        </td>
+
+                        <td>
+                            {{ class.class_code or '-' }}
+                        </td>
+
+                        <td>
+                            {{ class.class_teacher or '-' }}
+                        </td>
+
+                        <td>
+                            {{ class.capacity or '-' }}
+                        </td>
+
+                        <td>
+
+                            {% if class.status == "Active" %}
+
+                                <span class="status active">
+                                    Active
+                                </span>
+
+                            {% else %}
+
+                                <span class="status inactive">
+                                    {{ class.status or "Inactive" }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            {% else %}
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    🏫
+                </div>
+
+                <h3>No Classes Found</h3>
+
+                <p>
+                    No classes have been added yet.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <footer>
+
+        © 2026 St. Gabriel Secondary School. All Rights Reserved.
+
+    </footer>
+
+
+    <script>
+
+        function searchClasses() {
+
+            const input =
+                document.getElementById("searchInput");
+
+            const filter =
+                input.value.toLowerCase();
+
+            const table =
+                document.getElementById("classTable");
+
+            if (!table) return;
+
+            const rows =
+                table.getElementsByTagName("tr");
+
+            for (let i = 1; i < rows.length; i++) {
+
+                const text =
+                    rows[i].textContent.toLowerCase();
+
+                if (text.includes(filter)) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>My Results | St. Gabriel Secondary School</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+        }
+
+        .header {
+            background: #0b3d91;
+            color: white;
+            padding: 20px 35px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h2 {
+            font-size: 21px;
+        }
+
+        .back {
+            color: #0b3d91;
+            background: white;
+            padding: 9px 16px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1150px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        .title {
+            margin-bottom: 25px;
+        }
+
+        .title h1 {
+            color: #0b3d91;
+            margin-bottom: 7px;
+        }
+
+        .title p {
+            color: #777;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.07);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 750px;
+        }
+
+        th {
+            background: #0b3d91;
+            color: white;
+            padding: 14px;
+            text-align: left;
+        }
+
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .grade {
+            font-weight: bold;
+            color: #0b3d91;
+        }
+
+        .empty {
+            color: #777;
+            padding: 20px 0;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="header">
+
+    <h2>St. Gabriel Secondary School</h2>
+
+    <a href="{{ url_for('student_dashboard') }}" class="back">
+        ← Dashboard
+    </a>
+
+</div>
+
+
+<div class="container">
+
+    <div class="title">
+
+        <h1>My Results</h1>
+
+        <p>
+            {{ student.full_name }}
+            —
+            {{ student.admission_number }}
+        </p>
+
+    </div>
+
+
+    <div class="card">
+
+        {% if results %}
+
+        <table>
+
+            <tr>
+                <th>Subject</th>
+                <th>Code</th>
+                <th>Session</th>
+                <th>Term</th>
+                <th>CA</th>
+                <th>Exam</th>
+                <th>Total</th>
+                <th>Grade</th>
+                <th>Remark</th>
+            </tr>
+
+            {% for result in results %}
+
+            <tr>
+
+                <td>{{ result.subject_name }}</td>
+
+                <td>{{ result.subject_code }}</td>
+
+                <td>{{ result.session }}</td>
+
+                <td>{{ result.term }}</td>
+
+                <td>{{ result.ca_score }}</td>
+
+                <td>{{ result.exam_score }}</td>
+
+                <td><strong>{{ result.total_score }}</strong></td>
+
+                <td class="grade">
+                    {{ result.grade }}
+                </td>
+
+                <td>{{ result.remark }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        {% else %}
+
+        <p class="empty">
+            No results have been uploaded yet.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+</html>

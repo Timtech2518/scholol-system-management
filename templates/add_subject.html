@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+
+```
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Add New Subject | St. Gabriel School</title>
+
+<style>
+
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+        background: #f4f7fb;
+        color: #1f2937;
+    }
+
+    .header {
+        background: #0b3d91;
+        color: white;
+        padding: 22px 30px;
+    }
+
+    .header h1 {
+        font-size: 25px;
+        margin-bottom: 5px;
+    }
+
+    .header p {
+        opacity: 0.9;
+        font-size: 14px;
+    }
+
+    .container {
+        max-width: 750px;
+        margin: 35px auto;
+        padding: 0 20px;
+    }
+
+    .card {
+        background: white;
+        border-radius: 14px;
+        padding: 30px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    }
+
+    .section-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #0b3d91;
+        margin-bottom: 22px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+    }
+
+    label {
+        font-size: 14px;
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #374151;
+    }
+
+    .required {
+        color: #dc3545;
+    }
+
+    input,
+    select {
+        width: 100%;
+        padding: 13px 14px;
+        border: 1px solid #d1d5db;
+        border-radius: 8px;
+        font-size: 14px;
+        outline: none;
+        background: white;
+        transition: 0.2s;
+    }
+
+    input:focus,
+    select:focus {
+        border-color: #0b3d91;
+        box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 30px;
+        gap: 15px;
+    }
+
+    .btn {
+        text-decoration: none;
+        border: none;
+        padding: 13px 22px;
+        border-radius: 8px;
+        font-size: 14px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+
+    .btn-back {
+        background: #e9ecef;
+        color: #374151;
+    }
+
+    .btn-back:hover {
+        background: #dfe3e7;
+    }
+
+    .btn-save {
+        background: #0b3d91;
+        color: white;
+    }
+
+    .btn-save:hover {
+        background: #092f70;
+    }
+
+    @media (max-width: 600px) {
+
+        .card {
+            padding: 20px;
+        }
+
+        .buttons {
+            flex-direction: column;
+        }
+
+        .btn {
+            width: 100%;
+            text-align: center;
+        }
+
+    }
+
+</style>
+```
+
+</head>
+
+<body>
+
+```
+<!-- HEADER -->
+
+<div class="header">
+
+    <h1>Academic Management</h1>
+
+    <p>Add a new subject to St. Gabriel Secondary School</p>
+
+</div>
+
+
+<!-- CONTENT -->
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="section-title">
+            Add New Subject
+        </div>
+
+
+        <form method="POST">
+
+
+            <!-- SUBJECT CODE -->
+
+            <div class="form-group">
+
+                <label>
+                    Subject Code
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    name="subject_code"
+                    placeholder="e.g. MTH101"
+                    required
+                >
+
+            </div>
+
+
+            <!-- SUBJECT NAME -->
+
+            <div class="form-group">
+
+                <label>
+                    Subject Name
+                    <span class="required">*</span>
+                </label>
+
+                <input
+                    type="text"
+                    name="subject_name"
+                    placeholder="e.g. Mathematics"
+                    required
+                >
+
+            </div>
+
+
+            <!-- STATUS -->
+
+            <div class="form-group">
+
+                <label>
+                    Status
+                    <span class="required">*</span>
+                </label>
+
+                <select name="status" required>
+
+                    <option value="">
+                        Select Status
+                    </option>
+
+                    <option value="Active">
+                        Active
+                    </option>
+
+                    <option value="Inactive">
+                        Inactive
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+
+            <div class="buttons">
+
+                <a
+                    href="{{ url_for('subjects') }}"
+                    class="btn btn-back"
+                >
+                    ← Back to Subjects
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-save"
+                >
+                    Save Subject
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+```
+
+</body>
+</html>
+

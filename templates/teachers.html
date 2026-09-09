@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Teacher Management | St. Gabriel Secondary School</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #222;
+        }
+
+        /* HEADER */
+
+        .header {
+            background: #0b3d91;
+            color: white;
+            padding: 22px 40px;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-size: 25px;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .back-btn {
+            color: white;
+            text-decoration: none;
+            border: 1px solid rgba(255,255,255,.5);
+            padding: 10px 16px;
+            border-radius: 7px;
+            font-size: 14px;
+            transition: .2s;
+        }
+
+        .back-btn:hover {
+            background: white;
+            color: #0b3d91;
+        }
+
+        /* CONTAINER */
+
+        .container {
+            max-width: 1200px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        /* TOP SECTION */
+
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            gap: 15px;
+        }
+
+        .page-title h2 {
+            color: #0b3d91;
+            font-size: 23px;
+            margin-bottom: 5px;
+        }
+
+        .page-title p {
+            color: #777;
+            font-size: 14px;
+        }
+
+        .add-btn {
+            background: #0b3d91;
+            color: white;
+            text-decoration: none;
+            padding: 12px 20px;
+            border-radius: 7px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: .2s;
+        }
+
+        .add-btn:hover {
+            background: #082f70;
+            transform: translateY(-1px);
+        }
+
+        /* STAT CARD */
+
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.07);
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            background: #e8f0ff;
+            color: #0b3d91;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+        }
+
+        .stat-info h3 {
+            color: #0b3d91;
+            font-size: 24px;
+            margin-bottom: 3px;
+        }
+
+        .stat-info p {
+            color: #777;
+            font-size: 13px;
+        }
+
+        /* TABLE */
+
+        .table-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.07);
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 18px 20px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-header h3 {
+            color: #0b3d91;
+            font-size: 17px;
+        }
+
+        .search-box input {
+            padding: 10px 13px;
+            border: 1px solid #d5dce5;
+            border-radius: 7px;
+            outline: none;
+            width: 220px;
+        }
+
+        .search-box input:focus {
+            border-color: #0b3d91;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #f5f8fd;
+            color: #333;
+            font-size: 13px;
+            text-align: left;
+            padding: 14px 15px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        td {
+            padding: 14px 15px;
+            border-bottom: 1px solid #eee;
+            font-size: 13px;
+            color: #555;
+        }
+
+        tr:hover {
+            background: #fafcff;
+        }
+
+        .teacher-name {
+            color: #0b3d91;
+            font-weight: bold;
+        }
+
+        /* STATUS */
+
+        .status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        .active {
+            background: #e7f7ed;
+            color: #16803c;
+        }
+
+        .inactive {
+            background: #fdecec;
+            color: #c62828;
+        }
+
+        /* EMPTY */
+
+        .empty {
+            text-align: center;
+            padding: 50px 20px;
+            color: #777;
+        }
+
+        .empty-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .empty h3 {
+            color: #444;
+            margin-bottom: 5px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            text-align: center;
+            color: #777;
+            font-size: 13px;
+            padding: 25px;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 800px) {
+
+            .header-content {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .top-section {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .table-container {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 900px;
+            }
+
+            .table-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .search-box input {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <div class="header-content">
+
+            <div>
+                <h1>Teacher Management</h1>
+                <p>St. Gabriel Secondary School</p>
+            </div>
+
+            <a href="/admin" class="back-btn">
+                ← Back to Dashboard
+            </a>
+
+        </div>
+
+    </header>
+
+
+    <div class="container">
+
+        <!-- PAGE TITLE -->
+
+        <div class="top-section">
+
+            <div class="page-title">
+
+                <h2>Teachers</h2>
+
+                <p>
+                    Manage and view all teachers in the school.
+                </p>
+
+            </div>
+
+            <a href="/admin/teachers/add" class="add-btn">
+                + Add New Teacher
+            </a>
+
+        </div>
+
+
+        <!-- STAT -->
+
+        <div class="stat-card">
+
+            <div class="stat-icon">
+                👨‍🏫
+            </div>
+
+            <div class="stat-info">
+
+                <h3>{{ teachers|length }}</h3>
+
+                <p>Total Teachers</p>
+
+            </div>
+
+        </div>
+
+
+        <!-- TABLE -->
+
+        <div class="table-container">
+
+            <div class="table-header">
+
+                <h3>Teacher List</h3>
+
+                <div class="search-box">
+
+                    <input
+                        type="text"
+                        id="searchInput"
+                        placeholder="Search teacher..."
+                        onkeyup="searchTeachers()"
+                    >
+
+                </div>
+
+            </div>
+
+
+            {% if teachers %}
+
+            <table id="teacherTable">
+
+                <thead>
+
+                    <tr>
+
+                        <th>#</th>
+
+                        <th>Teacher ID</th>
+
+                        <th>Full Name</th>
+
+                        <th>Email</th>
+
+                        <th>Phone</th>
+
+                        <th>Gender</th>
+
+                        <th>Subject</th>
+
+                        <th>Class</th>
+
+                        <th>Qualification</th>
+
+                        <th>Status</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody>
+
+                    {% for teacher in teachers %}
+
+                    <tr>
+
+                        <td>
+                            {{ loop.index }}
+                        </td>
+
+                        <td>
+                            {{ teacher.teacher_id }}
+                        </td>
+
+                        <td class="teacher-name">
+                            {{ teacher.full_name }}
+                        </td>
+
+                        <td>
+                            {{ teacher.email or '-' }}
+                        </td>
+
+                        <td>
+                            {{ teacher.phone or '-' }}
+                        </td>
+
+                        <td>
+                            {{ teacher.gender or '-' }}
+                        </td>
+
+                        <td>
+                            {{ teacher.subject or '-' }}
+                        </td>
+
+                        <td>
+                            {{ teacher.class_name or '-' }}
+                        </td>
+
+                        <td>
+                            {{ teacher.qualification or '-' }}
+                        </td>
+
+                        <td>
+
+                            {% if teacher.status == "Active" %}
+
+                                <span class="status active">
+                                    Active
+                                </span>
+
+                            {% else %}
+
+                                <span class="status inactive">
+                                    {{ teacher.status or "Inactive" }}
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+            {% else %}
+
+            <div class="empty">
+
+                <div class="empty-icon">
+                    👨‍🏫
+                </div>
+
+                <h3>No Teachers Found</h3>
+
+                <p>
+                    No teachers have been added yet.
+                </p>
+
+            </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+
+    <footer>
+
+        © 2026 St. Gabriel Secondary School. All Rights Reserved.
+
+    </footer>
+
+
+    <script>
+
+        function searchTeachers() {
+
+            const input =
+                document.getElementById("searchInput");
+
+            const filter =
+                input.value.toLowerCase();
+
+            const table =
+                document.getElementById("teacherTable");
+
+            if (!table) return;
+
+            const rows =
+                table.getElementsByTagName("tr");
+
+            for (let i = 1; i < rows.length; i++) {
+
+                const text =
+                    rows[i].textContent.toLowerCase();
+
+                if (text.includes(filter)) {
+                    rows[i].style.display = "";
+                } else {
+                    rows[i].style.display = "none";
+                }
+
+            }
+
+        }
+
+    </script>
+
+</body>
+</html>

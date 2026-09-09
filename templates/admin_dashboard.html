@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Admin Dashboard | St. Gabriel Secondary School</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1e293b;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 250px;
+            height: 100vh;
+            background: #0b4f9c;
+            color: white;
+            padding: 25px 18px;
+            overflow-y: auto;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .logo .school-icon {
+            width: 55px;
+            height: 55px;
+            background: white;
+            color: #0b4f9c;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto;
+            font-size: 25px;
+            font-weight: bold;
+        }
+
+        .logo h2 {
+            font-size: 18px;
+            margin-top: 12px;
+        }
+
+        .logo p {
+            font-size: 11px;
+            opacity: 0.8;
+            margin-top: 4px;
+        }
+
+        .menu-title {
+            font-size: 11px;
+            text-transform: uppercase;
+            opacity: 0.65;
+            margin: 20px 10px 10px;
+        }
+
+        .sidebar a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            text-decoration: none;
+            padding: 12px 13px;
+            margin-bottom: 5px;
+            border-radius: 8px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: rgba(255,255,255,0.16);
+        }
+
+        .sidebar a.logout {
+            margin-top: 25px;
+            background: #dc2626;
+        }
+
+        .sidebar a.logout:hover {
+            background: #b91c1c;
+        }
+
+        /* MAIN */
+        .main {
+            margin-left: 250px;
+            min-height: 100vh;
+        }
+
+        /* TOPBAR */
+        .topbar {
+            height: 75px;
+            background: white;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 30px;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .topbar h1 {
+            font-size: 22px;
+            color: #0f172a;
+        }
+
+        .topbar p {
+            font-size: 13px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        .admin-profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .admin-avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #0b4f9c;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .admin-profile strong {
+            font-size: 14px;
+        }
+
+        .admin-profile small {
+            display: block;
+            color: #64748b;
+            margin-top: 3px;
+        }
+
+        /* CONTENT */
+        .content {
+            padding: 30px;
+        }
+
+        .welcome {
+            background: linear-gradient(135deg, #0b4f9c, #1976d2);
+            color: white;
+            padding: 25px;
+            border-radius: 14px;
+            margin-bottom: 25px;
+        }
+
+        .welcome h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .welcome p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        /* STAT CARDS */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 22px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.03);
+        }
+
+        .stat-info p {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 8px;
+        }
+
+        .stat-info h3 {
+            font-size: 28px;
+            color: #0f172a;
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background: #e8f1ff;
+            color: #0b4f9c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        /* SECTIONS */
+        .section-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 25px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            padding: 22px;
+            margin-bottom: 25px;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-header h3 {
+            font-size: 17px;
+            color: #0f172a;
+        }
+
+        .card-header a {
+            text-decoration: none;
+            color: #0b4f9c;
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        /* QUICK ACTIONS */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+        }
+
+        .quick-action {
+            text-decoration: none;
+            padding: 18px;
+            border: 1px solid #e5e7eb;
+            border-radius: 10px;
+            color: #1e293b;
+            transition: 0.3s;
+        }
+
+        .quick-action:hover {
+            border-color: #0b4f9c;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+        }
+
+        .quick-action .icon {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .quick-action strong {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+
+        .quick-action span {
+            font-size: 11px;
+            color: #64748b;
+        }
+
+        /* RECENT ACTIVITY */
+        .activity {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 13px 0;
+            border-bottom: 1px solid #eef2f7;
+        }
+
+        .activity:last-child {
+            border-bottom: none;
+        }
+
+        .activity-icon {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background: #e8f1ff;
+            color: #0b4f9c;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .activity p {
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        .activity small {
+            color: #94a3b8;
+            font-size: 11px;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 1100px) {
+            .stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .section-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 800px) {
+            .sidebar {
+                width: 70px;
+                padding: 20px 10px;
+            }
+
+            .logo h2,
+            .logo p,
+            .menu-title,
+            .sidebar a span {
+                display: none;
+            }
+
+            .logo .school-icon {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+
+            .sidebar a {
+                justify-content: center;
+                padding: 13px;
+            }
+
+            .main {
+                margin-left: 70px;
+            }
+
+            .topbar {
+                padding: 0 18px;
+            }
+
+            .admin-profile > div:last-child {
+                display: none;
+            }
+
+            .content {
+                padding: 18px;
+            }
+        }
+
+        @media (max-width: 550px) {
+            .stats {
+                grid-template-columns: 1fr;
+            }
+
+            .quick-actions {
+                grid-template-columns: 1fr;
+            }
+
+            .topbar h1 {
+                font-size: 18px;
+            }
+
+            .welcome h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+
+        <div class="logo">
+            <div class="school-icon">SG</div>
+            <h2>St. Gabriel</h2>
+            <p>Secondary School</p>
+        </div>
+
+        <div class="menu-title">Main Menu</div>
+
+        <a href="{{ url_for('admin_dashboard') }}" class="active">
+            <span>📊</span>
+            <span>Dashboard</span>
+        </a>
+
+        <a href="{{ url_for('admissions') }}">
+            <span>📋</span>
+            <span>Admissions</span>
+        </a>
+
+        <a href="{{ url_for('students') }}">
+            <span>👨‍🎓</span>
+            <span>Students</span>
+        </a>
+
+        <a href="{{ url_for('teachers') }}">
+            <span>👨‍🏫</span>
+            <span>Teachers</span>
+        </a>
+
+        <a href="{{ url_for('classes') }}">
+            <span>🏫</span>
+            <span>Classes</span>
+        </a>
+
+        <a href="{{ url_for('subjects') }}">
+            <span>📚</span>
+            <span>Subjects</span>
+        </a>
+
+
+        <div class="menu-title">Academic</div>
+
+        <a href="{{ url_for('student_results') }}">
+            <span>📝</span>
+            <span>Results</span>
+        </a>
+
+        <a href="{{ url_for('fees') }}">
+            <span>💳</span>
+            <span>School Fees</span>
+        </a>
+
+        <a href="{{ url_for('announcements') }}">
+            <span>📢</span>
+            <span>Announcements</span>
+        </a>
+
+
+        <div class="menu-title">Administration</div>
+
+        <!-- CONTACT MESSAGES -->
+        <a href="{{ url_for('contact_messages') }}">
+            <span>✉️</span>
+            <span>Contact Messages</span>
+        </a>
+
+        <a href="#">
+            <span>👥</span>
+            <span>Users</span>
+        </a>
+
+        <a href="#">
+            <span>⚙️</span>
+            <span>Settings</span>
+        </a>
+
+        <a href="{{ url_for('logout') }}" class="logout">
+            <span>🚪</span>
+            <span>Logout</span>
+        </a>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+        <!-- TOPBAR -->
+        <header class="topbar">
+
+            <div>
+                <h1>Admin Dashboard</h1>
+                <p>Manage your school from one place</p>
+            </div>
+
+            <div class="admin-profile">
+
+                <div class="admin-avatar">
+                    AD
+                </div>
+
+                <div>
+                    <strong>{{ session.get("user_name", "Administrator") }}</strong>
+                    <small>Administrator</small>
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- CONTENT -->
+        <section class="content">
+
+            <!-- WELCOME -->
+            <div class="welcome">
+
+                <h2>
+                    Welcome back, Administrator 👋
+                </h2>
+
+                <p>
+                    Here's what's happening at St. Gabriel Secondary School today.
+                </p>
+
+            </div>
+
+
+            <!-- STATISTICS -->
+            <div class="stats">
+
+                <div class="stat-card">
+
+                    <div class="stat-info">
+                        <p>Total Students</p>
+                        <h3>{{ total_students }}</h3>
+                    </div>
+
+                    <div class="stat-icon">
+                        👨‍🎓
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-info">
+                        <p>Total Teachers</p>
+                        <h3>{{ total_teachers }}</h3>
+                    </div>
+
+                    <div class="stat-icon">
+                        👨‍🏫
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-info">
+                        <p>Total Classes</p>
+                        <h3>{{ total_classes }}</h3>
+                    </div>
+
+                    <div class="stat-icon">
+                        🏫
+                    </div>
+
+                </div>
+
+
+                <div class="stat-card">
+
+                    <div class="stat-info">
+                        <p>Total Subjects</p>
+                        <h3>{{ total_subjects }}</h3>
+                    </div>
+
+                    <div class="stat-icon">
+                        📚
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- GRID -->
+            <div class="section-grid">
+
+
+                <!-- QUICK ACTIONS -->
+                <div class="card">
+
+                    <div class="card-header">
+                        <h3>Quick Actions</h3>
+                    </div>
+
+
+                    <div class="quick-actions">
+
+
+                        <a href="{{ url_for('students') }}"
+                           class="quick-action">
+
+                            <div class="icon">👨‍🎓</div>
+
+                            <strong>
+                                Manage Students
+                            </strong>
+
+                            <span>
+                                View and manage students
+                            </span>
+
+                        </a>
+
+
+                        <a href="{{ url_for('teachers') }}"
+                           class="quick-action">
+
+                            <div class="icon">👨‍🏫</div>
+
+                            <strong>
+                                Manage Teachers
+                            </strong>
+
+                            <span>
+                                View teaching staff
+                            </span>
+
+                        </a>
+
+
+                        <a href="{{ url_for('student_results') }}"
+                           class="quick-action">
+
+                            <div class="icon">📝</div>
+
+                            <strong>
+                                Student Results
+                            </strong>
+
+                            <span>
+                                View academic results
+                            </span>
+
+                        </a>
+
+
+                        <a href="{{ url_for('fees') }}"
+                           class="quick-action">
+
+                            <div class="icon">💳</div>
+
+                            <strong>
+                                School Fees
+                            </strong>
+
+                            <span>
+                                Manage student payments
+                            </span>
+
+                        </a>
+
+
+                        <a href="{{ url_for('announcements') }}"
+                           class="quick-action">
+
+                            <div class="icon">📢</div>
+
+                            <strong>
+                                Announcements
+                            </strong>
+
+                            <span>
+                                Manage school announcements
+                            </span>
+
+                        </a>
+
+
+                        <a href="{{ url_for('classes') }}"
+                           class="quick-action">
+
+                            <div class="icon">🏫</div>
+
+                            <strong>
+                                Manage Classes
+                            </strong>
+
+                            <span>
+                                View school classes
+                            </span>
+
+                        </a>
+
+
+                        <!-- CONTACT MESSAGES -->
+                        <a href="{{ url_for('contact_messages') }}"
+                           class="quick-action">
+
+                            <div class="icon">✉️</div>
+
+                            <strong>
+                                Contact Messages
+                            </strong>
+
+                            <span>
+                                View messages from visitors
+                            </span>
+
+                        </a>
+
+
+                    </div>
+
+                </div>
+
+
+                <!-- SYSTEM OVERVIEW -->
+                <div class="card">
+
+                    <div class="card-header">
+
+                        <h3>
+                            System Overview
+                        </h3>
+
+                    </div>
+
+
+                    <div class="activity">
+
+                        <div class="activity-icon">
+                            👨‍🎓
+                        </div>
+
+                        <div>
+
+                            <p>
+                                Student management system is active.
+                            </p>
+
+                            <small>
+                                Students
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity">
+
+                        <div class="activity-icon">
+                            👨‍🏫
+                        </div>
+
+                        <div>
+
+                            <p>
+                                Teacher records are available.
+                            </p>
+
+                            <small>
+                                Teachers
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity">
+
+                        <div class="activity-icon">
+                            📝
+                        </div>
+
+                        <div>
+
+                            <p>
+                                Results management is active.
+                            </p>
+
+                            <small>
+                                Academic
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="activity">
+
+                        <div class="activity-icon">
+                            💳
+                        </div>
+
+                        <div>
+
+                            <p>
+                                School fees management is active.
+                            </p>
+
+                            <small>
+                                Finance
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- CONTACT ACTIVITY -->
+                    <div class="activity">
+
+                        <div class="activity-icon">
+                            ✉️
+                        </div>
+
+                        <div>
+
+                            <p>
+                                Contact message management is active.
+                            </p>
+
+                            <small>
+                                Communication
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</body>
+</html>

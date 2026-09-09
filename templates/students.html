@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Students - St. Gabriel Secondary School</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+        }
+
+        header {
+            background: white;
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .logo {
+            font-size: 22px;
+            font-weight: bold;
+            color: #123c75;
+        }
+
+        header a {
+            color: #123c75;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 3px 12px rgba(0,0,0,.08);
+            overflow-x: auto;
+        }
+
+        h1 {
+            color: #123c75;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th,
+        td {
+            padding: 14px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #123c75;
+            color: white;
+        }
+
+        a.view {
+            color: #0645ad;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .active {
+            color: green;
+            font-weight: bold;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        ST. GABRIEL SECONDARY SCHOOL
+    </div>
+
+    <a href="{{ url_for('admin_dashboard') }}">
+        Admin Dashboard
+    </a>
+
+</header>
+
+
+<div class="container">
+
+    <h1>Students</h1>
+
+    <div class="card">
+
+        {% if students %}
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>ID</th>
+                    <th>Admission Number</th>
+                    <th>Full Name</th>
+                    <th>Class</th>
+                    <th>Gender</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for student in students %}
+
+                <tr>
+
+                    <td>
+                        {{ student.id }}
+                    </td>
+
+                    <td>
+                        {{ student.admission_number }}
+                    </td>
+
+                    <td>
+                        {{ student.full_name }}
+                    </td>
+
+                    <td>
+                        {{ student.class_name }}
+                    </td>
+
+                    <td>
+                        {{ student.gender }}
+                    </td>
+
+                    <td class="active">
+                        {{ student.status }}
+                    </td>
+
+                    <td>
+
+                        <a
+                            class="view"
+                            href="{{ url_for(
+                                'view_student',
+                                student_id=student.id
+                            ) }}"
+                        >
+                            View
+                        </a>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <p>No students have been admitted yet.</p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+</body>
+
+</html>

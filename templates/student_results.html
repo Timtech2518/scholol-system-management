@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Results - St. Gabriel Secondary School</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+        }
+
+        header {
+            background: #0b3d91;
+            color: white;
+            padding: 20px 40px;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        .container {
+            width: 95%;
+            margin: 30px auto;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        h2 {
+            color: #0b3d91;
+            margin: 0;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 11px 18px;
+            border-radius: 6px;
+            color: white;
+            background: #0b3d91;
+            display: inline-block;
+        }
+
+        .btn:hover {
+            background: #082f70;
+        }
+
+        .table-container {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 900px;
+        }
+
+        th,
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #ddd;
+            text-align: left;
+        }
+
+        th {
+            background: #0b3d91;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f5f8ff;
+        }
+
+        .empty {
+            text-align: center;
+            padding: 40px;
+            color: #777;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            text-decoration: none;
+            color: #0b3d91;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h1>St. Gabriel Secondary School</h1>
+</header>
+
+<div class="container">
+
+    <div class="top-bar">
+
+        <h2>Student Results</h2>
+
+        <a href="{{ url_for('add_result') }}" class="btn">
+            + Enter Result
+        </a>
+
+    </div>
+
+    <div class="table-container">
+
+        {% if results %}
+
+        <table>
+
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Admission No.</th>
+                    <th>Student Name</th>
+                    <th>Subject</th>
+                    <th>Session</th>
+                    <th>Term</th>
+                    <th>CA</th>
+                    <th>Exam</th>
+                    <th>Total</th>
+                    <th>Grade</th>
+                    <th>Remark</th>
+                </tr>
+            </thead>
+
+            <tbody>
+
+                {% for result in results %}
+
+                <tr>
+
+                    <td>{{ result.id }}</td>
+
+                    <td>
+                        {{ result.admission_number }}
+                    </td>
+
+                    <td>
+                        {{ result.full_name }}
+                    </td>
+
+                    <td>
+                        {{ result.subject_code }} -
+                        {{ result.subject_name }}
+                    </td>
+
+                    <td>
+                        {{ result.session }}
+                    </td>
+
+                    <td>
+                        {{ result.term }}
+                    </td>
+
+                    <td>
+                        {{ result.ca_score }}
+                    </td>
+
+                    <td>
+                        {{ result.exam_score }}
+                    </td>
+
+                    <td>
+                        {{ result.total_score }}
+                    </td>
+
+                    <td>
+                        {{ result.grade or '-' }}
+                    </td>
+
+                    <td>
+                        {{ result.remark or '-' }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+        <div class="empty">
+
+            <h3>No Results Found</h3>
+
+            <p>
+                No student results have been entered yet.
+            </p>
+
+            <a href="{{ url_for('add_result') }}" class="btn">
+                Enter First Result
+            </a>
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+  <a href="/admin" class="back">
+    ← Back to Dashboard
+</a>
+
+</div>
+
+</body>
+</html>

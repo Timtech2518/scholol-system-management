@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Add Announcement - St. Gabriel Secondary School</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f4f7fb;
+            margin: 0;
+        }
+
+        header {
+            background: #0b3d91;
+            color: white;
+            padding: 20px 40px;
+        }
+
+        header h2 {
+            margin: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 700px;
+            margin: 35px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 3px 15px rgba(0,0,0,0.08);
+        }
+
+        h1 {
+            color: #0b3d91;
+        }
+
+        label {
+            display: block;
+            margin-top: 18px;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input,
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        button {
+            margin-top: 25px;
+            background: #0b3d91;
+            color: white;
+            border: none;
+            padding: 13px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background: #082f70;
+        }
+
+        .back {
+            display: inline-block;
+            margin-top: 20px;
+            color: #0b3d91;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <h2>St. Gabriel Secondary School</h2>
+</header>
+
+<div class="container">
+
+    <h1>Add Announcement</h1>
+
+    <form method="POST" action="{{ url_for('add_announcement') }}">
+
+        <label>Announcement Title</label>
+
+        <input
+            type="text"
+            name="title"
+            placeholder="e.g. School Resumption Date"
+            required
+        >
+
+
+        <label>Message</label>
+
+        <textarea
+            name="message"
+            placeholder="Enter announcement message..."
+            required
+        ></textarea>
+
+
+        <label>Audience</label>
+
+        <select name="audience" required>
+
+            <option value="Everyone">Everyone</option>
+            <option value="Students">Students</option>
+            <option value="Teachers">Teachers</option>
+            <option value="Parents">Parents</option>
+
+        </select>
+
+
+        <label>Status</label>
+
+        <select name="status" required>
+
+            <option value="Published">Published</option>
+            <option value="Draft">Draft</option>
+
+        </select>
+
+
+        <button type="submit">
+            Publish Announcement
+        </button>
+
+    </form>
+
+    <a href="{{ url_for('announcements') }}" class="back">
+        ← Back to Announcements
+    </a>
+
+</div>
+
+</body>
+</html>

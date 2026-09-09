@@ -1,0 +1,654 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Add Fee Payment | St. Gabriel</title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f7fb;
+            color: #1f2937;
+        }
+
+        .header {
+            background: #0b5ed7;
+            color: white;
+            padding: 25px 35px;
+        }
+
+        .header h1 {
+            margin-bottom: 5px;
+        }
+
+        .container {
+            max-width: 850px;
+            margin: 35px auto;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+        }
+
+        .card h2 {
+            color: #0b5ed7;
+            margin-bottom: 25px;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .full {
+            grid-column: span 2;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input,
+        select,
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            font-size: 15px;
+        }
+
+        input:focus,
+        select:focus,
+        textarea:focus {
+            outline: none;
+            border-color: #0b5ed7;
+        }
+
+        .fee-box {
+            background: #f0f7ff;
+            border: 1px solid #bfdbfe;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 25px;
+        }
+
+        .fee-box h3 {
+            color: #0b5ed7;
+            margin-bottom: 15px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #dbeafe;
+        }
+
+        .row:last-child {
+            border-bottom: none;
+        }
+
+        .big {
+            font-size: 21px;
+            font-weight: bold;
+            color: #dc2626;
+        }
+
+        .partial-info {
+            margin-top: 15px;
+            padding: 12px;
+            background: #fff7ed;
+            border: 1px solid #fed7aa;
+            border-radius: 7px;
+            color: #9a3412;
+            display: none;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .btn {
+            padding: 13px 22px;
+            border-radius: 7px;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .back {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .save {
+            background: #0b5ed7;
+            color: white;
+        }
+
+        .save:hover {
+            background: #084298;
+        }
+
+        @media(max-width: 700px) {
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .full {
+                grid-column: span 1;
+            }
+
+            .buttons {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+    <h1>St. Gabriel Secondary School</h1>
+
+    <p>School Fee Management</p>
+
+</div>
+
+
+<div class="container">
+
+    <div class="card">
+
+        <h2>💳 Add Fee Payment</h2>
+
+
+        <form method="POST">
+
+
+            <div class="form-grid">
+
+
+                <!-- STUDENT -->
+
+                <div class="full">
+
+                    <label>
+                        Student
+                    </label>
+
+                    <select
+                        name="student_id"
+                        required
+                    >
+
+                        <option value="">
+                            Select Student
+                        </option>
+
+                        {% for student in students %}
+
+                        <option value="{{ student.id }}">
+
+                            {{ student.admission_number }}
+                            -
+                            {{ student.full_name }}
+                            -
+                            {{ student.class_name }}
+
+                        </option>
+
+                        {% endfor %}
+
+                    </select>
+
+                </div>
+
+
+                <!-- SESSION -->
+
+                <div>
+
+                    <label>
+                        Session
+                    </label>
+
+                    <input
+                        type="text"
+                        name="session"
+                        placeholder="2026/2027"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- TERM -->
+
+                <div>
+
+                    <label>
+                        Term
+                    </label>
+
+                    <select
+                        name="term"
+                        required
+                    >
+
+                        <option value="">
+                            Select Term
+                        </option>
+
+                        <option value="First Term">
+                            First Term
+                        </option>
+
+                        <option value="Second Term">
+                            Second Term
+                        </option>
+
+                        <option value="Third Term">
+                            Third Term
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- FEE TYPE -->
+
+                <div class="full">
+
+                    <label>
+                        Bill Type
+                    </label>
+
+                    <select
+                        name="fee_type"
+                        id="fee_type"
+                        required
+                    >
+
+                        <option value="">
+                            Select Bill
+                        </option>
+
+                        <option value="School Fees">
+                            School Fees
+                        </option>
+
+                        <option value="PTA Levy">
+                            PTA Levy
+                        </option>
+
+                        <option value="Textbooks">
+                            Textbooks
+                        </option>
+
+                        <option value="School Uniform">
+                            School Uniform
+                        </option>
+
+                        <option value="Practical Fee">
+                            Practical Fee
+                        </option>
+
+                        <option value="Other Compulsory Bill">
+                            Other Compulsory Bill
+                        </option>
+
+                    </select>
+
+                </div>
+
+
+                <!-- AMOUNT -->
+
+                <div>
+
+                    <label>
+                        Total Bill Amount
+                    </label>
+
+                    <input
+                        type="number"
+                        name="amount"
+                        id="amount"
+                        min="0"
+                        step="0.01"
+                        placeholder="e.g. 150000"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PAYMENT -->
+
+                <div>
+
+                    <label>
+                        Amount Paying
+                    </label>
+
+                    <input
+                        type="number"
+                        name="amount_paid"
+                        id="amount_paid"
+                        min="0"
+                        step="0.01"
+                        placeholder="Enter payment"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- PAYMENT DATE -->
+
+                <div>
+
+                    <label>
+                        Payment Date
+                    </label>
+
+                    <input
+                        type="date"
+                        name="payment_date"
+                        required
+                    >
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div>
+
+                    <label>
+                        Description
+                    </label>
+
+                    <input
+                        type="text"
+                        name="description"
+                        placeholder="Optional"
+                    >
+
+                </div>
+
+
+            </div>
+
+
+            <!-- PAYMENT SUMMARY -->
+
+            <div class="fee-box">
+
+                <h3>
+                    Payment Summary
+                </h3>
+
+
+                <div class="row">
+
+                    <span>
+                        Total Bill
+                    </span>
+
+                    <strong id="total_bill">
+                        ₦0.00
+                    </strong>
+
+                </div>
+
+
+                <div class="row">
+
+                    <span>
+                        Amount Paying
+                    </span>
+
+                    <strong id="total_paid">
+                        ₦0.00
+                    </strong>
+
+                </div>
+
+
+                <div class="row">
+
+                    <span>
+                        Remaining Balance
+                    </span>
+
+                    <strong
+                        id="balance"
+                        class="big"
+                    >
+                        ₦0.00
+                    </strong>
+
+                </div>
+
+
+                <div
+                    class="partial-info"
+                    id="partialInfo"
+                >
+                    This is a partial payment.
+                    The remaining balance can be
+                    paid later.
+                </div>
+
+
+            </div>
+
+
+            <div class="buttons">
+
+                <a
+                    href="{{ url_for('fees') }}"
+                    class="btn back"
+                >
+                    ← Back
+                </a>
+
+
+                <button
+                    type="submit"
+                    class="btn save"
+                >
+                    Save Payment
+                </button>
+
+            </div>
+
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    const amount =
+        document.getElementById("amount");
+
+    const amountPaid =
+        document.getElementById("amount_paid");
+
+    const feeType =
+        document.getElementById("fee_type");
+
+    const totalBill =
+        document.getElementById("total_bill");
+
+    const totalPaid =
+        document.getElementById("total_paid");
+
+    const balance =
+        document.getElementById("balance");
+
+    const partialInfo =
+        document.getElementById("partialInfo");
+
+
+    function calculatePayment() {
+
+        let bill =
+            parseFloat(amount.value) || 0;
+
+        let paid =
+            parseFloat(amountPaid.value) || 0;
+
+
+        // If school fees are selected,
+        // suggest 60% as the minimum partial payment
+
+        if (
+            feeType.value === "School Fees"
+            &&
+            document.activeElement === amount
+            &&
+            bill > 0
+        ) {
+
+            let sixtyPercent =
+                bill * 0.60;
+
+            amountPaid.placeholder =
+                "60% = ₦" +
+                sixtyPercent.toLocaleString(
+                    "en-NG"
+                );
+
+        }
+
+
+        if (paid > bill) {
+
+            paid = bill;
+
+            amountPaid.value = bill;
+
+        }
+
+
+        let remaining =
+            bill - paid;
+
+
+        totalBill.textContent =
+            "₦" +
+            bill.toLocaleString(
+                "en-NG",
+                {
+                    minimumFractionDigits: 2
+                }
+            );
+
+
+        totalPaid.textContent =
+            "₦" +
+            paid.toLocaleString(
+                "en-NG",
+                {
+                    minimumFractionDigits: 2
+                }
+            );
+
+
+        balance.textContent =
+            "₦" +
+            remaining.toLocaleString(
+                "en-NG",
+                {
+                    minimumFractionDigits: 2
+                }
+            );
+
+
+        if (
+            paid > 0 &&
+            paid < bill
+        ) {
+
+            partialInfo.style.display =
+                "block";
+
+        } else {
+
+            partialInfo.style.display =
+                "none";
+
+        }
+
+    }
+
+
+    amount.addEventListener(
+        "input",
+        calculatePayment
+    );
+
+
+    amountPaid.addEventListener(
+        "input",
+        calculatePayment
+    );
+
+
+    feeType.addEventListener(
+        "change",
+        calculatePayment
+    );
+
+
+</script>
+
+
+</body>
+
+</html>
+```

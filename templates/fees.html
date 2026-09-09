@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+```
+<title>Fee Management - St. Gabriel Secondary School</title>
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial, sans-serif;
+        background: #f4f7fb;
+        margin: 0;
+        color: #222;
+    }
+
+    header {
+        background: #0b3d91;
+        color: white;
+        padding: 20px 40px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    header h2 {
+        margin: 0;
+    }
+
+    header a {
+        color: white;
+        text-decoration: none;
+        margin-left: 20px;
+        font-size: 15px;
+    }
+
+    header a:hover {
+        text-decoration: underline;
+    }
+
+    .container {
+        width: 92%;
+        margin: 30px auto;
+    }
+
+    .top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .top h1 {
+        color: #0b3d91;
+        margin: 0;
+    }
+
+    .btn {
+        background: #0b3d91;
+        color: white;
+        padding: 12px 18px;
+        text-decoration: none;
+        border-radius: 6px;
+        display: inline-block;
+        font-weight: bold;
+    }
+
+    .btn:hover {
+        background: #082f70;
+    }
+
+    /* SUMMARY CARDS */
+
+    .summary-cards {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 18px;
+        margin-bottom: 30px;
+    }
+
+    .card {
+        background: white;
+        padding: 22px;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    .card h3 {
+        margin: 0 0 10px;
+        color: #555;
+        font-size: 15px;
+    }
+
+    .card .number {
+        font-size: 25px;
+        font-weight: bold;
+        color: #0b3d91;
+    }
+
+    /* TABLE */
+
+    .section-title {
+        color: #0b3d91;
+        margin-bottom: 15px;
+    }
+
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 900px;
+    }
+
+    th,
+    td {
+        padding: 14px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background: #0b3d91;
+        color: white;
+        font-size: 14px;
+    }
+
+    tr:hover {
+        background: #f5f8ff;
+    }
+
+    .amount {
+        font-weight: bold;
+    }
+
+    .balance {
+        color: #dc2626;
+        font-weight: bold;
+    }
+
+    .paid {
+        color: #15803d;
+        font-weight: bold;
+        background: #dcfce7;
+        padding: 6px 10px;
+        border-radius: 20px;
+        display: inline-block;
+    }
+
+    .partial {
+        color: #2563eb;
+        font-weight: bold;
+        background: #dbeafe;
+        padding: 6px 10px;
+        border-radius: 20px;
+        display: inline-block;
+    }
+
+    .pending {
+        color: #d97706;
+        font-weight: bold;
+        background: #fef3c7;
+        padding: 6px 10px;
+        border-radius: 20px;
+        display: inline-block;
+    }
+
+    .action-btn {
+        background: #0b3d91;
+        color: white;
+        padding: 8px 12px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 13px;
+    }
+
+    .action-btn:hover {
+        background: #082f70;
+    }
+
+    .empty {
+        text-align: center;
+        padding: 30px;
+        color: #777;
+    }
+
+    /* PAYMENT RECORDS */
+
+    .records {
+        margin-top: 40px;
+    }
+
+    .records table {
+        min-width: 1000px;
+    }
+
+    .description {
+        max-width: 250px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    /* MOBILE */
+
+    @media (max-width: 900px) {
+
+        header {
+            padding: 18px 20px;
+            flex-direction: column;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        header a {
+            margin-left: 0;
+            margin-right: 15px;
+        }
+
+        .container {
+            width: 95%;
+        }
+
+        .top {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+
+        .summary-cards {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 550px) {
+
+        .summary-cards {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>
+```
+
+</head>
+
+<body>
+
+<header>
+
+```
+<h2>St. Gabriel Secondary School</h2>
+
+<div>
+    <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+    <a href="{{ url_for('students') }}">Students</a>
+</div>
+```
+
+</header>
+
+<div class="container">
+
+```
+<!-- TOP -->
+
+<div class="top">
+
+    <h1>Fee Management</h1>
+
+    <a href="{{ url_for('add_fee') }}" class="btn">
+        + Add Fee Payment
+    </a>
+
+</div>
+
+
+<!-- SUMMARY CARDS -->
+
+<div class="summary-cards">
+
+    <div class="card">
+        <h3>Total Students</h3>
+
+        <div class="number">
+            {{ fees|length }}
+        </div>
+    </div>
+
+
+    <div class="card">
+        <h3>Total Bills</h3>
+
+        <div class="number">
+            ₦{{ "{:,.2f}".format(
+                fees|sum(attribute='total_amount')
+            ) }}
+        </div>
+    </div>
+
+
+    <div class="card">
+        <h3>Total Paid</h3>
+
+        <div class="number">
+            ₦{{ "{:,.2f}".format(
+                fees|sum(attribute='total_paid')
+            ) }}
+        </div>
+    </div>
+
+
+    <div class="card">
+        <h3>Total Balance</h3>
+
+        <div class="number">
+            ₦{{ "{:,.2f}".format(
+                fees|sum(attribute='balance')
+            ) }}
+        </div>
+    </div>
+
+</div>
+
+
+<!-- STUDENT FEE SUMMARY -->
+
+<h2 class="section-title">
+    Student Fee Summary
+</h2>
+
+
+<div class="table-container">
+
+    <table>
+
+        <thead>
+
+            <tr>
+                <th>ID</th>
+                <th>Admission No.</th>
+                <th>Student Name</th>
+                <th>Class</th>
+                <th>Total Bill</th>
+                <th>Amount Paid</th>
+                <th>Balance</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+
+        </thead>
+
+
+        <tbody>
+
+            {% for fee in fees %}
+
+            <tr>
+
+                <td>
+                    {{ fee.id }}
+                </td>
+
+                <td>
+                    {{ fee.admission_number }}
+                </td>
+
+                <td>
+                    <strong>{{ fee.full_name }}</strong>
+                </td>
+
+                <td>
+                    {{ fee.class_name }}
+                </td>
+
+                <td class="amount">
+                    ₦{{ "{:,.2f}".format(fee.total_amount) }}
+                </td>
+
+                <td class="amount">
+                    ₦{{ "{:,.2f}".format(fee.total_paid) }}
+                </td>
+
+                <td class="balance">
+                    ₦{{ "{:,.2f}".format(fee.balance) }}
+                </td>
+
+                <td>
+
+                    {% if fee.payment_status == "Paid" %}
+
+                        <span class="paid">
+                            Paid
+                        </span>
+
+                    {% elif fee.payment_status == "Partial" %}
+
+                        <span class="partial">
+                            Partial
+                        </span>
+
+                    {% else %}
+
+                        <span class="pending">
+                            Pending
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+                    <a
+                        href="{{ url_for('add_fee') }}"
+                        class="action-btn"
+                    >
+                        Make Payment
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% else %}
+
+            <tr>
+
+                <td colspan="9" class="empty">
+                    No active students or fee records found.
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+<!-- PAYMENT RECORDS -->
+
+<div class="records">
+
+    <h2 class="section-title">
+        Fee Payment Records
+    </h2>
+
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+
+                    <th>ID</th>
+                    <th>Admission No.</th>
+                    <th>Student</th>
+                    <th>Session</th>
+                    <th>Term</th>
+                    <th>Fee Type</th>
+                    <th>Bill Amount</th>
+                    <th>Paid</th>
+                    <th>Status</th>
+                    <th>Payment Date</th>
+                    <th>Description</th>
+
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for record in fee_records %}
+
+                <tr>
+
+                    <td>
+                        {{ record.id }}
+                    </td>
+
+                    <td>
+                        {{ record.admission_number }}
+                    </td>
+
+                    <td>
+                        {{ record.full_name }}
+                    </td>
+
+                    <td>
+                        {{ record.session }}
+                    </td>
+
+                    <td>
+                        {{ record.term }}
+                    </td>
+
+                    <td>
+                        {{ record.fee_type }}
+                    </td>
+
+                    <td class="amount">
+                        ₦{{ "{:,.2f}".format(record.amount) }}
+                    </td>
+
+                    <td class="amount">
+                        ₦{{ "{:,.2f}".format(record.amount_paid or 0) }}
+                    </td>
+
+                    <td>
+
+                        {% if record.payment_status == "Paid" %}
+
+                            <span class="paid">
+                                Paid
+                            </span>
+
+                        {% elif record.payment_status == "Partial" %}
+
+                            <span class="partial">
+                                Partial
+                            </span>
+
+                        {% else %}
+
+                            <span class="pending">
+                                Pending
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+                        {{ record.payment_date or "Not yet" }}
+                    </td>
+
+                    <td class="description">
+                        {{ record.description or "-" }}
+                    </td>
+
+                </tr>
+
+                {% else %}
+
+                <tr>
+
+                    <td colspan="11" class="empty">
+                        No payment records available.
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+</body>
+</html>
